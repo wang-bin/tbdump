@@ -339,7 +339,7 @@ static int parseLoadCommands(FILE *in, dylib_t *dylib, uint32_t ncmds, long star
                 {
                     return RETVAL_PLATFORM_MULTI;
                 }
-                plat = lc.hdr.cmd == LC_VERSION_MIN_MACOSX   ? PLATFORM_OSX  :
+                plat = lc.hdr.cmd == LC_VERSION_MIN_MACOSX   ? PLATFORM_MACOS:
                        lc.hdr.cmd == LC_VERSION_MIN_IPHONEOS ? PLATFORM_IOS  :
                        lc.hdr.cmd == LC_VERSION_MIN_TVOS     ? PLATFORM_TVOS : PLATFORM_WATCHOS;
                 break;
