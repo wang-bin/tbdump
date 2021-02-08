@@ -107,6 +107,7 @@ typedef union
     struct dylib_command        dylib;
     struct version_min_command  version;
     struct symtab_command       symtab;
+    struct build_version_command build;
 } lc_t;
 
 typedef struct nlist    sym32_t;
@@ -341,6 +342,10 @@ static int parseLoadCommands(FILE *in, dylib_t *dylib, uint32_t ncmds, long star
                 plat = lc.hdr.cmd == LC_VERSION_MIN_MACOSX   ? PLATFORM_OSX  :
                        lc.hdr.cmd == LC_VERSION_MIN_IPHONEOS ? PLATFORM_IOS  :
                        lc.hdr.cmd == LC_VERSION_MIN_TVOS     ? PLATFORM_TVOS : PLATFORM_WATCHOS;
+                break;
+            case LC_BUILD_VERSION:
+                READ_OR_RETURN(lcbuf + hdrsize, sizeof(lc.build) - hdrsize, in)
+                plat = lc.build.platform;
                 break;
             case LC_SYMTAB:
                 READ_OR_RETURN(lcbuf + hdrsize, sizeof(lc.symtab) - hdrsize, in)
